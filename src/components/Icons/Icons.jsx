@@ -11,6 +11,7 @@ import {
   faDroplet,
   faWind,
   faCircleExclamation,
+  faRainbow,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const Icons = ({ iconName, fontSize }) => {
@@ -32,7 +33,8 @@ export const Icons = ({ iconName, fontSize }) => {
     { name: "Tornado", icon: faHurricane },
     { name: "Humidity", icon: faDroplet },
     { name: "Wind", icon: faWind },
-    { name: "error", icon: faCircleExclamation },
+    { name: "Error", icon: faCircleExclamation },
+    { name: "Rainbow", icon: faRainbow },
   ];
   const item = weather.find((item) => item.name === iconName);
 

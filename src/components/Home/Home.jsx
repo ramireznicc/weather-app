@@ -12,6 +12,7 @@ import { Search } from "@mui/icons-material";
 import axios from "axios";
 
 export const Home = () => {
+  const [error, setError] = useState(false);
   const [data, setData] = useState({
     name: "",
     country: "",
@@ -36,8 +37,9 @@ export const Home = () => {
           wind: (res.data.wind.speed * 3.6).toFixed(1),
           humidity: res.data.main.humidity,
         });
+        setError(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setError(true));
     setCity("");
   };
 
@@ -77,6 +79,7 @@ export const Home = () => {
           <Box
             my="16px"
             sx={{
+              height: "450px",
               maxWidth: "500px",
               display: "flex",
               flexDirection: "column",
@@ -90,63 +93,61 @@ export const Home = () => {
               gap: "16px",
             }}
           >
-            <Typography
-              color="text.dark"
-              variant="h4"
-              fontWeight={600}
-              letterSpacing=".1rem"
-            >
-              {data.name}, {data.country}
-            </Typography>
-            <Typography variant="h5" fontWeight={500}>
-              {data.weather}
-            </Typography>
-            <Icons iconName={data.weather} fontSize="9.4rem" />
-            <Typography letterSpacing=".2rem" variant="h3" fontWeight={700}>
-              {data.temp.toFixed(1)}°
-            </Typography>
-            <Stack direction="row" gap="4rem">
-              <Stack
-                direction="row"
-                alignItems="center"
-                gap="1rem"
-                justifyContent="center"
-              >
-                <Icons iconName="Humidity" fontSize="2.6rem" />
-                <Stack direction="column" alignItems="center">
-                  <Typography lineHeight="22px" variant="h6">
-                    {data.humidity}%
-                  </Typography>
-                  <Typography
-                    lineHeight="22px"
-                    fontWeight={600}
-                    letterSpacing=".1rem"
-                  >
-                    Humidity
-                  </Typography>
-                </Stack>
+            {error ? (
+              <Stack gap="1rem">
+                <Typography variant="h6" fontWeight={500}>
+                  Please, enter a valid city name.
+                </Typography>
+                <Icons iconName="Error" fontSize="3rem" />
               </Stack>
-              <Stack
-                direction="row"
-                alignItems="center"
-                gap="1rem"
-                justifyContent="center"
-              >
-                <Icons iconName="Wind" fontSize={"2.6rem"} />
-                <Stack direction="column" alignItems="center">
-                  <Typography lineHeight="22px" variant="h6">
-                    {data.wind} km/h
-                  </Typography>
-                  <Typography
-                    lineHeight="22px"
-                    fontWeight={600}
-                    letterSpacing=".1rem"
+            ) : (
+              <>
+                <Typography color="text.dark" variant="h4" fontWeight={700}>
+                  {data.name}, {data.country}
+                </Typography>
+                <Typography variant="h5" fontWeight={500}>
+                  {data.weather}
+                </Typography>
+                <Icons iconName={data.weather} fontSize="9.4rem" />
+                <Typography letterSpacing=".2rem" variant="h3" fontWeight={700}>
+                  {data.temp.toFixed(1)}°
+                </Typography>
+                <Stack direction="row" gap="4rem">
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap="1rem"
+                    justifyContent="center"
                   >
-                    Wind
-                  </Typography>
+                    <Icons iconName="Humidity" fontSize="2.6rem" />
+                    <Stack direction="column" alignItems="center">
+                      <Typography lineHeight="22px" variant="h6">
+                        {data.humidity}%
+                      </Typography>
+                      <Typography lineHeight="22px" fontWeight={500}>
+                        Humidity
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap="1rem"
+                    justifyContent="center"
+                  >
+                    <Icons iconName="Wind" fontSize={"2.6rem"} />
+                    <Stack direction="column" alignItems="center">
+                      <Typography lineHeight="22px" variant="h6">
+                        {data.wind} km/h
+                      </Typography>
+                      <Typography lineHeight="22px" fontWeight={500}>
+                        Wind
+                      </Typography>
+                    </Stack>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Stack>
+              </>
+            )}
           </Box>
         </Slide>
       )}
