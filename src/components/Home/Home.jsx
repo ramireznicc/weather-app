@@ -39,12 +39,16 @@ export const Home = () => {
         });
         setError(false);
       })
-      .catch((err) => setError(true));
+      .catch(() => setError(true));
     setCity("");
   };
 
   const handleChange = (e) => {
     setCity(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") if (city !== "") handleSearch();
   };
 
   return (
@@ -69,6 +73,7 @@ export const Home = () => {
           fullWidth={true}
           sx={{ input: { color: "text.light" } }}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
         />
         <IconButton color="primary" onClick={handleSearch}>
           <Search />
